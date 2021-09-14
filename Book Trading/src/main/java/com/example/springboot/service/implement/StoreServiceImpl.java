@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+@Service
 public class StoreServiceImpl extends RequestService<Store>  /*implements StoreService*/ {
 
     @Autowired
