@@ -1,6 +1,7 @@
 package com.example.springboot.service.implement;
 
-import com.example.springboot.dao.CategoryDAO;
+import com.example.springboot.common.RequestService;
+import com.example.springboot.repository.CategoryDAO;
 import com.example.springboot.entity.Category;
 import com.example.springboot.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl extends RequestService<Category>  {
 
     @Autowired
     CategoryDAO cateDAO;
@@ -34,12 +35,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(Integer integer) {
+    public Category findById(Long integer) {
         return cateDAO.findById(integer).orElseThrow(() -> new ApiRequestException("Oops can't get one category"));
     }
 
     @Override
-    public void deleteById(Integer integer) {
+    public void deleteById(Long integer) {
         try {
             cateDAO.deleteById(integer);
         }catch (Exception e){

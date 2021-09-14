@@ -2,11 +2,13 @@ package com.example.springboot.controller.rest;
 
 import com.example.springboot.entity.Category;
 import com.example.springboot.exception.ApiRequestException;
+import com.example.springboot.service.implement.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.springboot.service.CategoryService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -15,7 +17,7 @@ import java.util.List;
 public class CategoryRestController {
 
     @Autowired
-    CategoryService cateService;
+    CategoryServiceImpl cateService;
 
     /**
      * getAll program
@@ -32,7 +34,7 @@ public class CategoryRestController {
      * @return
      */
     @GetMapping("/category/{id}")
-    public ResponseEntity<Category> getOne(@PathVariable Integer id){
+    public ResponseEntity<Category> getOne( @Valid @PathVariable Long id){
             return ResponseEntity.ok().body(cateService.findById(id));
     }
 
@@ -42,7 +44,7 @@ public class CategoryRestController {
      * @return
      */
     @PostMapping("/category")
-    public ResponseEntity<Category> create(@RequestBody Category cate){
+    public ResponseEntity<Category> create( @Valid @RequestBody Category cate){
             return ResponseEntity.ok().body(cateService.save(cate));
     }
 
@@ -53,7 +55,7 @@ public class CategoryRestController {
      * @return
      */
     @PutMapping("/category/{id}")
-    public ResponseEntity<Category> update(@PathVariable Integer id, @RequestBody Category cate){
+    public ResponseEntity<Category> update(@PathVariable Integer id, @Valid @RequestBody Category cate){
             return ResponseEntity.ok().body(cateService.save(cate));
     }
 
@@ -62,7 +64,7 @@ public class CategoryRestController {
      * @param id
      */
     @DeleteMapping("/category/{id}")
-    public void delete(@PathVariable Integer id){
+    public void delete( @Valid @PathVariable Long id){
             cateService.deleteById(id);
     }
 }

@@ -1,14 +1,15 @@
 package com.example.springboot.controller.rest;
 
-import com.example.springboot.dao.CategoryDAO;
-import com.example.springboot.dao.BookDAO;
+import com.example.springboot.repository.CategoryDAO;
 import com.example.springboot.entity.Book;
 import com.example.springboot.exception.ApiRequestException;
+import com.example.springboot.service.implement.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.springboot.service.BookService;
+import com.example.springboot.common.RequestService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -17,7 +18,7 @@ import java.util.List;
 public class BookRestController {
 
     @Autowired
-    BookService proService;
+    BookServiceImpl proService;
     @Autowired
     CategoryDAO CateDAO;
 
@@ -36,7 +37,7 @@ public class BookRestController {
      * @return
      */
     @GetMapping("/book/{id}")
-    public ResponseEntity<Book> getOne(@PathVariable Integer id){
+    public ResponseEntity<Book> getOne( @Valid @PathVariable Long id){
             return ResponseEntity.ok().body(proService.findById(id));
     }
 
@@ -46,8 +47,8 @@ public class BookRestController {
      * @return
      */
     @PostMapping("/book")
-    public ResponseEntity<Book> create(@RequestBody Book pro){
-            int cateID = pro.getCate().getCategoryID();
+    public ResponseEntity<Book> create( @Valid @RequestBody Book pro){
+            Long cateID = pro.getCate().getCategoryID();
             CateDAO.findById(cateID).orElseThrow(() -> new ApiRequestException("Oops can't create book because "+cateID+" is null"));
             return ResponseEntity.ok().body(proService.save(pro));
     }
@@ -59,7 +60,7 @@ public class BookRestController {
      * @return
      */
     @PutMapping("/book/{id}")
-    public ResponseEntity<Book> update(@PathVariable Integer id, @RequestBody Book pro){
+    public ResponseEntity<Book> update(@PathVariable Integer id, @Valid @RequestBody Book pro){
             return ResponseEntity.ok().body(proService.save(pro));
     }
 
@@ -68,14 +69,14 @@ public class BookRestController {
      * @param id
      */
     @DeleteMapping("/book/{id}")
-    public void delete(@PathVariable Integer id){
-            proService.deleteById(id);
+    public void delete( @Valid @PathVariable Long id){
+        proService.deleteById(id);
     }
 
 
 //    //find by category
 //    @GetMapping("/category/book/{id}")
 //    public Book getByCate(@PathVariable Integer id){
-//        return  proService.findByCateCategoryID(id);
+//        return  proService.findByCateCategoryIDLike(id);
 //    }
 }

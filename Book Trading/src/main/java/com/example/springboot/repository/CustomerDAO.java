@@ -1,11 +1,12 @@
-package com.example.springboot.dao;
+package com.example.springboot.repository;
 
 import com.example.springboot.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+@Repository
 public interface CustomerDAO extends JpaRepository<Customer, Long> {
 
     //find account by phone number
@@ -14,7 +15,7 @@ public interface CustomerDAO extends JpaRepository<Customer, Long> {
     //find account by username
     Optional<Customer> findByUsername(String username);
 
-//    //find account by phone number or by username
-//    @Query("SELECT o FROM Customer o WHERE CONCAT(o.phoneNumber, o.username) LIKE ?1")
+    //find account by phone number or by username
+//    @Query("SELECT o FROM Customer o WHERE CONCAT(o.phoneNumber, o.username) LIKE '%key%'")
 //    Customer findByKey(String key);
 }

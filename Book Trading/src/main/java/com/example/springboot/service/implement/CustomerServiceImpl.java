@@ -1,6 +1,7 @@
 package com.example.springboot.service.implement;
 
-import com.example.springboot.dao.CustomerDAO;
+import com.example.springboot.common.RequestService;
+import com.example.springboot.repository.CustomerDAO;
 import com.example.springboot.entity.Customer;
 import com.example.springboot.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl extends RequestService<Customer> implements CustomerService {
 
     @Autowired
     CustomerDAO useDAO;

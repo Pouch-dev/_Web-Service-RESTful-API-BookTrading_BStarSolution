@@ -11,7 +11,7 @@ public class Store implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int storeID;
+    private Long storeID;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -25,17 +25,17 @@ public class Store implements Serializable {
     public Store() {
     }
 
-    public Store(int storeID, Customer store, Store bookStoreID) {
+    public Store(Long storeID, Customer store, Store bookStoreID) {
         this.storeID = storeID;
         this.store = store;
         this.bookStoreID = bookStoreID;
     }
 
-    public int getStoreID() {
+    public Long getStoreID() {
         return storeID;
     }
 
-    public void setStoreID(int storeID) {
+    public void setStoreID(Long storeID) {
         this.storeID = storeID;
     }
 

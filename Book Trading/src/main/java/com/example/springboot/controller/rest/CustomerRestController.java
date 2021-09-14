@@ -3,6 +3,7 @@ package com.example.springboot.controller.rest;
 import com.example.springboot.entity.Customer;
 import com.example.springboot.exception.ApiRequestException;
 import com.example.springboot.service.CustomerService;
+import com.example.springboot.service.implement.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +18,7 @@ import java.util.List;
 public class CustomerRestController {
 
     @Autowired
-    CustomerService custService;
+    CustomerServiceImpl custService;
     @Autowired
     BCryptPasswordEncoder pe;
 
@@ -36,7 +37,7 @@ public class CustomerRestController {
      * @return
      */
     @GetMapping("/customer/{id}")
-    public ResponseEntity<Customer> getOne(@PathVariable Long id, @RequestBody Customer customer){
+    public ResponseEntity<Customer> getOne( @Valid @PathVariable Long id, @RequestBody Customer customer){
             System.out.println("User "+customer.getUsername()+" with password: "+pe.encode(customer.getPassword()));
             return ResponseEntity.ok().body(custService.findById(id));
     }
@@ -47,7 +48,7 @@ public class CustomerRestController {
      * @return
      */
     @PostMapping("/customer")
-    public ResponseEntity<Customer> create(@RequestBody Customer customer){
+    public ResponseEntity<Customer> create( @Valid @RequestBody Customer customer){
             System.out.println("User "+customer.getUsername()+" with password: "+pe.encode(customer.getPassword()));
             return ResponseEntity.ok().body(custService.save(customer));
     }
@@ -59,7 +60,7 @@ public class CustomerRestController {
      * @return
      */
     @PutMapping("/customer/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Integer id, @RequestBody Customer customer){
+    public ResponseEntity<Customer> update(@PathVariable Integer id, @RequestBody @Valid Customer customer){
             System.out.println("User "+customer.getUsername()+" with password: "+pe.encode(customer.getPassword()));
             return ResponseEntity.ok().body(custService.save(customer));
     }
@@ -69,7 +70,7 @@ public class CustomerRestController {
      * @param id
      */
     @DeleteMapping("/customer/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete( @Valid @PathVariable Long id){
         custService.deleteById(id);
     }
 
@@ -81,7 +82,7 @@ public class CustomerRestController {
      */
     //find account by phone number
     @GetMapping("/customer/phone/{phoneID}")
-    public ResponseEntity<Customer> getPhone(@PathVariable String phoneID,@RequestBody Customer customer){
+    public ResponseEntity<Customer> getPhone(@PathVariable String phoneID,@RequestBody @Valid Customer customer){
             System.out.println("User "+customer.getUsername()+" with password: "+pe.encode(customer.getPassword()));
             return ResponseEntity.ok().body(custService.findByPhoneNumber(phoneID));
     }

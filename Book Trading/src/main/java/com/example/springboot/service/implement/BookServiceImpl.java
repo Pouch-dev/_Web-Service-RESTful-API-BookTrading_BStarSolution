@@ -1,6 +1,7 @@
 package com.example.springboot.service.implement;
 
-import com.example.springboot.dao.BookDAO;
+import com.example.springboot.common.RequestService;
+import com.example.springboot.repository.BookDAO;
 import com.example.springboot.entity.Book;
 import com.example.springboot.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl extends RequestService<Book>  /*implements BookService*/ {
 
     @Autowired
     BookDAO bookDAO;
@@ -34,12 +35,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book findById(Integer integer) {
+    public Book findById(Long integer) {
         return bookDAO.findById(integer).orElseThrow(() ->  new ApiRequestException("Oops can't get one book"));
     }
 
     @Override
-    public void deleteById(Integer integer) {
+    public void deleteById(Long integer) {
         try {
             bookDAO.deleteById(integer);
         }catch (Exception e){
@@ -48,7 +49,7 @@ public class BookServiceImpl implements BookService {
     }
 
 //    @Override
-//    public Book findByCateCategoryID(Integer id) {
-//        return bookDAO.findByCateCategoryID(id).orElseThrow(() -> new ApiRequestException("Oops can't get by category book"));
+//    public Book findByCateCategoryIDLike(Integer id) {
+//        return bookDAO.findByCateCategoryIDLike(id).orElseThrow(() -> new ApiRequestException("Oops can't get by category book"));
 //    }
 }

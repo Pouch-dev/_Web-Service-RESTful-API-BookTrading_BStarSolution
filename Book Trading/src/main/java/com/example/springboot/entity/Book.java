@@ -13,7 +13,7 @@ public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bookID;
+    private Long bookID;
     @NotNull(message = "Book Name not null")
     private String bookName;
     @NotNull(message = "Actived not null")
@@ -32,7 +32,7 @@ public class Book implements Serializable {
     public Book() {
     }
 
-    public Book(Integer bookID, String bookName, Boolean actived, String image, List<Store> storeID, Category cate) {
+    public Book(Long bookID, String bookName, Boolean actived, String image, List<Store> storeID, Category cate) {
         this.bookID = bookID;
         this.bookName = bookName;
         this.actived = actived;
@@ -41,11 +41,11 @@ public class Book implements Serializable {
         this.cate = cate;
     }
 
-    public Integer getBookID() {
+    public Long getBookID() {
         return bookID;
     }
 
-    public void setBookID(Integer bookID) {
+    public void setBookID(Long bookID) {
         this.bookID = bookID;
     }
 

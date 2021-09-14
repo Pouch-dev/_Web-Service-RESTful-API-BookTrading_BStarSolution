@@ -13,8 +13,8 @@ import java.util.List;
 public class Category implements Serializable {
 
     @Id
-    @NotEmpty(message = "Category ID not empty")
-    private Integer categoryID;
+    @NotNull(message = "Category ID not null")
+    private Long categoryID;
     @NotNull(message = "Category Name not null")
     private String categoryName;
 
@@ -25,17 +25,17 @@ public class Category implements Serializable {
     public Category() {
     }
 
-    public Category(Integer categoryID, String categoryName, List<Book> cateID) {
+    public Category(Long categoryID, String categoryName, List<Book> cateID) {
         this.categoryID = categoryID;
         this.categoryName = categoryName;
         this.cateID = cateID;
     }
 
-    public Integer getCategoryID() {
+    public Long getCategoryID() {
         return categoryID;
     }
 
-    public void setCategoryID(Integer categoryID) {
+    public void setCategoryID(Long categoryID) {
         this.categoryID = categoryID;
     }
 
