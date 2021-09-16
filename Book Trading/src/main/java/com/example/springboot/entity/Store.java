@@ -2,7 +2,6 @@ package com.example.springboot.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 @Entity
@@ -11,32 +10,32 @@ public class Store implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long storeID;
+    private Integer storeId;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userStoreID")
+    @JoinColumn(name = "userStoreId")
     private Customer store;
 
     @ManyToOne
-    @JoinColumn(name = "bookID")
-    private Store bookStoreID;
+    @JoinColumn(name = "bookId")
+    private Product bookStoreId;
 
     public Store() {
     }
 
-    public Store(Long storeID, Customer store, Store bookStoreID) {
-        this.storeID = storeID;
+    public Store(Integer storeId, Customer store, Product bookStoreId) {
+        this.storeId = storeId;
         this.store = store;
-        this.bookStoreID = bookStoreID;
+        this.bookStoreId = bookStoreId;
     }
 
-    public Long getStoreID() {
-        return storeID;
+    public Integer getStoreId() {
+        return storeId;
     }
 
-    public void setStoreID(Long storeID) {
-        this.storeID = storeID;
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 
     public Customer getStore() {
@@ -47,24 +46,11 @@ public class Store implements Serializable {
         this.store = store;
     }
 
-    public Store getBookStoreID() {
-        return bookStoreID;
+    public Product getBookStoreId() {
+        return bookStoreId;
     }
 
-    public void setBookStoreID(Store bookStoreID) {
-        this.bookStoreID = bookStoreID;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Store store1 = (Store) o;
-        return storeID == store1.storeID && store.equals(store1.store) && bookStoreID.equals(store1.bookStoreID);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(storeID, store, bookStoreID);
+    public void setBookStoreId(Product bookStoreId) {
+        this.bookStoreId = bookStoreId;
     }
 }

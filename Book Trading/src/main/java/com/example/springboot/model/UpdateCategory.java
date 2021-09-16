@@ -1,18 +1,17 @@
 package com.example.springboot.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book {
+public class UpdateCategory {
 
-    int bookID;
-    String bookName;
-    Boolean actived;
-    String image;
-    List<Store> storeID;
-    Category cate;
+    @NotBlank
+    Integer categoryID;
+    String categoryName;
 }

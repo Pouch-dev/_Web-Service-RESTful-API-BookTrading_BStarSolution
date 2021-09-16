@@ -1,6 +1,8 @@
 package com.example.springboot.service.implement;
 
 import com.example.springboot.common.RequestService;
+import com.example.springboot.model.AddCustomer;
+import com.example.springboot.model.UpdateCustomer;
 import com.example.springboot.repository.CustomerDAO;
 import com.example.springboot.entity.Customer;
 import com.example.springboot.exception.ApiRequestException;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomerServiceImpl extends RequestService<Customer> implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     CustomerDAO useDAO;
@@ -26,21 +28,34 @@ public class CustomerServiceImpl extends RequestService<Customer> implements Cus
     }
 
     @Override
-    public <S extends Customer> S save(S entity) {
-        try{
-            return useDAO.save(entity);
-        }catch (Exception e){
-            throw new ApiRequestException("Oops can't save customer");
-        }
+    public Customer save(AddCustomer customerDto) {
+        Customer customer = new Customer();
+        customer.convertFromAddCustomer(customerDto);
+        return useDAO.save(customer);
     }
 
     @Override
-    public Customer findById(Long integer) {
-        return useDAO.findById(integer).orElseThrow(() -> new ApiRequestException("Oops can't get one customer"));
+    public Customer updateCustomer(UpdateCustomer updateCustomer) {
+        Customer customer = useDAO.findById(updateCustomer.getCustomerId()).orElseThrow(() -> new ApiRequestException(
+            String.format("Not found customer with id = [%d]", updateCustomer.getCustomerId())
+        ));
+        customer.setUsername(updateCustomer.getUsername());
+        customer.setPassword(updateCustomer.getPassword());
+        customer.setFullName(updateCustomer.getFullName());
+        customer.setPhoneNumber(updateCustomer.getPhoneNumber());
+        customer.setAddress(updateCustomer.getAddress());
+        return useDAO.save(customer);
     }
 
     @Override
-    public void deleteById(Long integer) {
+    public Customer findById(Integer customerId) {
+        return useDAO.findById(customerId).orElseThrow(() -> new ApiRequestException(
+                String.format("Can't get customer id [%d]",customerId)
+        ));
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
         try{
             useDAO.deleteById(integer);
         }catch (Exception e){
@@ -50,7 +65,9 @@ public class CustomerServiceImpl extends RequestService<Customer> implements Cus
 
     @Override
     public Customer findByPhoneNumber(String phoneID) {
-        return useDAO.findByPhoneNumber(phoneID).orElseThrow(() -> new ApiRequestException("Oops can't get by phone customer"));
+        return useDAO.findByPhoneNumber(phoneID).orElseThrow(() -> new ApiRequestException(
+                String.format(("Can't get customer by id"))
+        ));
     }
 
     @Override
@@ -58,8 +75,8 @@ public class CustomerServiceImpl extends RequestService<Customer> implements Cus
         return useDAO.findByUsername(username).orElseThrow(() -> new ApiRequestException("Oops can't get by username customer"));
     }
 
-//    @Override
-//    public Customer findByKey(String key) {
-//        return useDAO.findByKey(key);
-//    }
+    @Override
+    public List<Customer> findByKey(String key) {
+        return useDAO.findByKey(key);
+    }
 }

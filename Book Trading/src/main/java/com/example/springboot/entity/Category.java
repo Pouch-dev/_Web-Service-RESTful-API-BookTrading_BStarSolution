@@ -1,5 +1,6 @@
 package com.example.springboot.entity;
 
+import com.example.springboot.model.AddCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -13,30 +14,31 @@ import java.util.List;
 public class Category implements Serializable {
 
     @Id
-    @NotNull(message = "Category ID not null")
-    private Long categoryID;
-    @NotNull(message = "Category Name not null")
-    private String categoryName;
+    @NotNull(message = "Category ID not empty")
+    private Integer categoryId;  // categoryId != null
+    @NotEmpty(message = "Category Name not null")
+    // @NotBlank
+    private String categoryName; // categoryName !=null && categoryName.trim().length() > 0
 
     @JsonIgnore
     @OneToMany(mappedBy = "cate")
-    private List<Book> cateID;
+    private List<Product> cateId;
 
     public Category() {
     }
 
-    public Category(Long categoryID, String categoryName, List<Book> cateID) {
-        this.categoryID = categoryID;
+    public Category(Integer categoryId, String categoryName, List<Product> cateId) {
+        this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.cateID = cateID;
+        this.cateId = cateId;
     }
 
-    public Long getCategoryID() {
-        return categoryID;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryID(Long categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {
@@ -47,11 +49,16 @@ public class Category implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public List<Book> getCateID() {
-        return cateID;
+    public List<Product> getCateId() {
+        return cateId;
     }
 
-    public void setCateID(List<Book> cateID) {
-        this.cateID = cateID;
+    public void setCateId(List<Product> cateId) {
+        this.cateId = cateId;
+    }
+
+    public void  convertFromAddCategory(AddCategory categoryDto){
+        this.categoryId = categoryDto.getCategoryId();
+        this.categoryName = categoryDto.getCategoryName();
     }
 }

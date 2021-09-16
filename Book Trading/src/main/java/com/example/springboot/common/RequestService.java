@@ -2,13 +2,13 @@ package com.example.springboot.common;
 
 import java.util.List;
 
-public abstract class RequestService <k>{
+public abstract class RequestService <Product>{
 
-    public abstract List<k> findAll();
+    public abstract List<Product> findAll();
 
-    public abstract <S extends k> S save(S entity);
+    public abstract Product save(Product entity);
 
-    public abstract k findById(Long integer);
+    public abstract Product findById(Integer integer);
 
-    public abstract void deleteById(Long integer);
+    public abstract void deleteById(Integer integer);
 }

@@ -1,17 +1,21 @@
 package com.example.springboot.service;
 
-import com.example.springboot.entity.Book;
+import com.example.springboot.entity.Product;
+import com.example.springboot.model.AddProduct;
+import com.example.springboot.model.UpdateBook;
 
 import java.util.List;
 
 public interface BookService {
-//    List<Book> findAll();
-//
-//    <S extends Book> S save(S entity);
-//
-//    Book findById(Integer integer);
-//
-//    void deleteById(Integer integer);
+    List<Product> findAll();
 
-    //Book findByCateCategoryIDLike(Integer id);
+    Product save(AddProduct bookDto);
+
+    Product findById(Integer bookId);
+
+    void deleteById(Integer bookId);
+
+    Product updateBook(UpdateBook updateBook);
+
+    List<Product> findByCateCategoryId(Integer categoryId);
 }

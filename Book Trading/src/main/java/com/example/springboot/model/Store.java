@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Store {
 
-    int storeID;
-    Customer store;
-    Store bookStoreID;
+    private Integer storeID;
+    private AddCustomer store;
+    private Store bookStoreID;
 }

@@ -1,5 +1,6 @@
 package com.example.springboot.entity;
 
+import com.example.springboot.model.AddCustomer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @NotEmpty(message = "Username not null")
     @Size(min = 6, max = 12, message = "Username must be between 6 and 12 characters")
     private String username;
@@ -28,26 +29,26 @@ public class Customer implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "store")
-    private List<Store> userStoreID;
+    private List<Store> userStoreId;
 
     public Customer() {
     }
 
-    public Customer(Long id, String username, String password, String fullName, String phoneNumber, String address, List<Store> userStoreID) {
+    public Customer(Integer id, String username, String password, String fullName, String phoneNumber, String address, List<Store> userStoreId) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.userStoreID = userStoreID;
+        this.userStoreId = userStoreId;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -91,12 +92,20 @@ public class Customer implements Serializable {
         this.address = address;
     }
 
-    public List<Store> getUserStoreID() {
-        return userStoreID;
+    public List<Store> getUserStoreId() {
+        return userStoreId;
     }
 
-    public void setUserStoreID(List<Store> userStoreID) {
-        this.userStoreID = userStoreID;
+    public void setUserStoreId(List<Store> userStoreId) {
+        this.userStoreId = userStoreId;
+    }
+
+    public void convertFromAddCustomer(AddCustomer customerDto){
+        this.username = customerDto.getUsername();
+        this.password = customerDto.getPassword();
+        this.fullName = customerDto.getFullName();
+        this.phoneNumber = customerDto.getPhoneNumber();
+        this.address = customerDto.getAddress();
     }
 
 }
